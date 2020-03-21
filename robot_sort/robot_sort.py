@@ -94,27 +94,54 @@ class SortingRobot:
         """
         return self._light == "ON"
 
-    def while_moving_right(self):
-        if compare_item() == -1:
-            swap_item()
-            move_right()
-            set_light_off()
-        elif compare_item() == 0:
-            move_right()
+    def perform_moving_right_actions(self):
+        if self.compare_item() == None:
+            return
+        # held item's value is less, return -1.
+        elif self.compare_item() == -1:
+            self.swap_item()
+            self.move_right()
+        elif self.compare_item() == 0:
+            self.swap_item()
+            self.move_right()
+        elif self.compare_item() == 1:
+            self.move_right()
+        # print(self._position)
 
-    def while_moving_right(self):
-        if compare_item() == 1:
-            swap_item()
-            move_left()
-            set_light_off()
-        elif compare_item() == 0:
-            move_left()
+    def perform_moving_left_actions(self):
+        if self.compare_item() == None:
+            return
+        elif self.compare_item() == 1:  # held item's value is greater, return 1.
+            self.swap_item()
+            self.move_left()
+        elif self.compare_item() == 0:
+            self.swap_item()
+            self.move_left()
+        elif self.compare_item() == -1:
+            self.move_left()
+        # print(self._position)
 
     def sort(self):
         """
-        Sort the robot's list.
+        Sort the robot's lists.
         """
-        while
+        self.swap_item()
+        self.move_right()
+        i = 0
+        while self.light_is_on() == False:
+            i += 1
+            self.move_right()
+            while self.can_move_right():
+                self.perform_moving_right_actions()
+            while self.can_move_left() and self.compare_item() != None:
+                self.perform_moving_left_actions()
+            if self.can_move_right():
+                self.swap_item()  # get none
+                self.move_right()
+                self.swap_item()
+            else:
+                self.swap_item()
+                self.set_light_on()
 
 
 '''
